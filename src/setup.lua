@@ -34,6 +34,11 @@ function distributeCardsToEachZone(deck, zones)
         deck.takeObject().setPosition(zone.getPosition())
     end
 end
+-- deal cards to seated players
+function dealCards(deck, num)
+    deck.shuffle()
+    deck.deal(num)
+end
 function setup()
     local numPlayers = length(getSeatedPlayers())
     if numPlayers < 3 or numPlayers > 7 then
@@ -49,11 +54,8 @@ function setup()
             end
         end 
     end
-    -- deal character cards for each seated player
     broadcastToAll("Select a character card and put it into your panel")
-    charDeck.shuffle()
-    charDeck.deal(3)
-    -- remove the set up button after dealing character cards
+    dealCards(charDeck, 3)
     setupButton.clearButtons()
     local playerTag = "player_" .. tostring(numPlayers)
     transferObjectsWithSameTag(idDeck, charDeck, playerTag)
