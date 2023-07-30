@@ -1,14 +1,4 @@
 require("src/utils")
-setup_button_parameters = {}
-setup_button_parameters.click_function = 'setup'
-setup_button_parameters.function_owner = nil
-setup_button_parameters.label = "Set up"
-setup_button_parameters.position = {0,0.8,0}
-setup_button_parameters.rotation = {0,180,0}
-setup_button_parameters.width = 500
-setup_button_parameters.height = 500
-setup_button_parameters.font_size = 150
-setup_button_parameters.fontStyle = "Bold"
 local idDeck_guid = "937c8b"
 local charDeck_guid = "e0c75d"
 local setupButton_guid = "2816c9"
@@ -16,9 +6,21 @@ function onLoad()
     idDeck = getObjectFromGUID(idDeck_guid)
     charDeck = getObjectFromGUID(charDeck_guid)
     setupButton = getObjectFromGUID(setupButton_guid)
-    setupButton.createButton(setup_button_parameters)
+    setupButton.createButton(getSetUpButtonParameters())
 end
--- take objects with specific tag from the source to the target
+function getSetUpButtonParameters()
+    return {
+        click_function = 'setup',
+        function_owner = nil,
+        label = "Set up",
+        position = {0,0.8,0},
+        rotation = {0,180,0},
+        width = 500,
+        height = 500,
+        font_size = 150,
+        fontStyle = "Bold"
+    }
+end
 function transferObjectsWithSameTag(source, target, tag)
     for _, object in ipairs(source.getObjects()) do
         if not contains(object.tags, tag) then
@@ -27,7 +29,6 @@ function transferObjectsWithSameTag(source, target, tag)
         end
     end
 end
--- dispatch cards in a deck to each zone
 function distributeCardsToEachZone(deck, zones)
     deck.shuffle()
     for _, zone in ipairs(zones) do
@@ -44,7 +45,6 @@ function removeUnusedPlayerObjects()
         end 
     end
 end
--- deal cards to seated players
 function dealCards(deck, num)
     deck.shuffle()
     deck.deal(num)
