@@ -10,7 +10,7 @@ function onLoad()
 end
 function getSetUpButtonParameters()
     return {
-        click_function = 'setup',
+        click_function = 'setUp',
         function_owner = nil,
         label = "Set up",
         position = {0,0.8,0},
@@ -50,7 +50,7 @@ function dealCards(deck, num)
     deck.shuffle()
     deck.deal(num)
 end
-function setup()
+function setUp()
     local numPlayers = length(getSeatedPlayers())
     if numPlayers < 3 or numPlayers > 7 then
        broadcastToAll("[WARNING]: This game only supports 3 - 7 players", "Yellow") 
