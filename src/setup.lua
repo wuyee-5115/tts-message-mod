@@ -34,29 +34,12 @@ function distributeCardsToEachZone(deck, zones)
         deck.takeObject().setPosition(zone.getPosition())
     end
 end
--- Function to set an object visible to only one player
-function setVisibleTo(object, playerColor)
-    local seatedPlayers = getSeatedPlayers()
-    -- Create a table with all players except the target player
-    local playersToHide = {}
-    for _, player in ipairs(seatedPlayers) do
-        if player ~= playerColor then
-            table.insert(playersToHide, player)
-        end
-    end
-    -- Set the object invisible to all players except the target player
-    object.setInvisibleTo(playersToHide)
-end
 function setup()
-   -- check player numbers
-    if length(getSeatedPlayers()) < 3 then
-       broadcastToAll("[WARNING]: This game requires at least 3 players", "Yellow") 
-       return
-    elseif length(getSeatedPlayers()) > 7 then
-       broadcastToAll("[WARNING]: This game supports at most 7 players", "Yellow") 
+    local numPlayers = length(getSeatedPlayers())
+    if numPlayers < 3 or numPlayers > 7 then
+       broadcastToAll("[WARNING]: This game only supports 3 - 7 players", "Yellow") 
        return
     end
-    -- remove unused player panels
     -- player panels are tagged with corresponding color names
     local player_col = {"White", "Red", "Yellow", "Green", "Blue", "Purple", "Pink"}
     for i, col in ipairs(player_col) do
@@ -72,12 +55,8 @@ function setup()
     charDeck.deal(3)
     -- remove the set up button after dealing character cards
     setupButton.clearButtons()
-    local numPlayers = length(getSeatedPlayers())
-    if numPlayers >= 3 and numPlayers <= 7 then
-        idDeck.setPosition({-0.59, 0, 0})
-        local playerTag = "player_" .. tostring(numPlayers)
-        transferObjectsWithSameTag(idDeck, charDeck, playerTag)
-        distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
-        charDeck.putObject(idDeck)
-    end
+    local playerTag = "player_" .. tostring(numPlayers)
+    transferObjectsWithSameTag(idDeck, charDeck, playerTag)
+    distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
+    charDeck.putObject(idDeck)
 end
