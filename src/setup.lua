@@ -34,6 +34,16 @@ function distributeCardsToEachZone(deck, zones)
         deck.takeObject().setPosition(zone.getPosition())
     end
 end
+function removeUnusedPlayerObjects()
+    local player_colors = {"White", "Red", "Yellow", "Green", "Blue", "Purple", "Pink"}
+    for i, color in ipairs(player_colors) do
+        if not contains(getSeatedPlayers(), color) then
+            for i, object in ipairs(getObjectsWithTag(color)) do
+                destroyObject(object)
+            end
+        end 
+    end
+end
 -- deal cards to seated players
 function dealCards(deck, num)
     deck.shuffle()
@@ -45,15 +55,7 @@ function setup()
        broadcastToAll("[WARNING]: This game only supports 3 - 7 players", "Yellow") 
        return
     end
-    -- player panels are tagged with corresponding color names
-    local player_col = {"White", "Red", "Yellow", "Green", "Blue", "Purple", "Pink"}
-    for i, col in ipairs(player_col) do
-        if not contains(getSeatedPlayers(), col) then
-            for i, obj in ipairs(getObjectsWithTag(col)) do
-                destroyObject(obj)
-            end
-        end 
-    end
+    removeUnusedPlayerObjects()
     broadcastToAll("Select a character card and put it into your panel")
     dealCards(charDeck, 3)
     setupButton.clearButtons()
