@@ -36,6 +36,7 @@ function distributeCardsToEachZone(deck, zones)
     end
 end
 function removeUnusedPlayerObjects()
+    -- this function assumes that target objects have corresponding tags (i.e. color name) to their owner
     local player_colors = {"White", "Red", "Yellow", "Green", "Blue", "Purple", "Pink"}
     for i, color in ipairs(player_colors) do
         if not contains(getSeatedPlayers(), color) then
@@ -56,7 +57,7 @@ function setup()
        return
     end
     removeUnusedPlayerObjects()
-    broadcastToAll("Select a character card and put it into your panel")
+    broadcastToAll("[INFO]: Select a character card and put it into your panel")
     dealCards(charDeck, 3)
     setupButton.clearButtons()
     local playerTag = "player_" .. tostring(numPlayers)
