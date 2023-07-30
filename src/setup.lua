@@ -9,11 +9,14 @@ setup_button_parameters.width = 500
 setup_button_parameters.height = 500
 setup_button_parameters.font_size = 150
 setup_button_parameters.fontStyle = "Bold"
+local idDeck_guid = "937c8b"
+local charDeck_guid = "e0c75d"
+local setupButton_guid = "2816c9"
 function onLoad()
-    id_deck = getObjectFromGUID("937c8b")
-    char_deck = getObjectFromGUID("e0c75d")
-    setup_btn = getObjectFromGUID('2816c9')
-    setup_btn.createButton(setup_button_parameters)
+    idDeck = getObjectFromGUID(idDeck_guid)
+    charDeck = getObjectFromGUID(charDeck_guid)
+    setupButton = getObjectFromGUID(setupButton_guid)
+    setupButton.createButton(setup_button_parameters)
 end
 -- take objects with specific tag from the source to the target
 function transferObjectsWithSameTag(source, target, tag)
@@ -65,16 +68,16 @@ function setup()
     end
     -- deal character cards for each seated player
     broadcastToAll("Select a character card and put it into your panel")
-    char_deck.shuffle()
-    char_deck.deal(3)
+    charDeck.shuffle()
+    charDeck.deal(3)
     -- remove the set up button after dealing character cards
-    setup_btn.clearButtons()
+    setupButton.clearButtons()
     local numPlayers = length(getSeatedPlayers())
     if numPlayers >= 3 and numPlayers <= 7 then
-        id_deck.setPosition({-0.59, 0, 0})
+        idDeck.setPosition({-0.59, 0, 0})
         local playerTag = "player_" .. tostring(numPlayers)
-        transferObjectsWithSameTag(id_deck, char_deck, playerTag)
-        distributeCardsToEachZone(id_deck, getObjectsWithTag("identity_zone"))
-        char_deck.putObject(id_deck)
+        transferObjectsWithSameTag(idDeck, charDeck, playerTag)
+        distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
+        charDeck.putObject(idDeck)
     end
 end
