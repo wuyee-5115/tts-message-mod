@@ -32,7 +32,9 @@ end
 function distributeCardsToEachZone(deck, zones)
     deck.shuffle()
     for _, zone in ipairs(zones) do
-        deck.takeObject().setPosition(zone.getPosition())
+        local card = deck.takeObject()
+        card.setPosition(zone.getPosition())
+        card.setRotation(zone.getRotation())
     end
 end
 function removeUnusedPlayerObjects()

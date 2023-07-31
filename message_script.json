@@ -1,7 +1,7 @@
 {
   "SaveName": "message_script",
-  "EpochTime": 1690641503,
-  "Date": "7/29/2023 10:38:23 PM",
+  "EpochTime": 1690795036,
+  "Date": "7/31/2023 5:17:16 PM",
   "VersionNumber": "v13.2.2",
   "GameMode": "Cards",
   "GameType": "",
@@ -267,7 +267,7 @@
     "TurnColor": ""
   },
   "DecalPallet": [],
-  "LuaScript": "-- Bundled by luabundle {\"rootModuleName\":\"Global.-1.lua\",\"version\":\"1.6.0\"}\nlocal __bundle_require, __bundle_loaded, __bundle_register, __bundle_modules = (function(superRequire)\n\tlocal loadingPlaceholder = {[{}] = true}\n\n\tlocal register\n\tlocal modules = {}\n\n\tlocal require\n\tlocal loaded = {}\n\n\tregister = function(name, body)\n\t\tif not modules[name] then\n\t\t\tmodules[name] = body\n\t\tend\n\tend\n\n\trequire = function(name)\n\t\tlocal loadedModule = loaded[name]\n\n\t\tif loadedModule then\n\t\t\tif loadedModule == loadingPlaceholder then\n\t\t\t\treturn nil\n\t\t\tend\n\t\telse\n\t\t\tif not modules[name] then\n\t\t\t\tif not superRequire then\n\t\t\t\t\tlocal identifier = type(name) == 'string' and '\\\"' .. name .. '\\\"' or tostring(name)\n\t\t\t\t\terror('Tried to require ' .. identifier .. ', but no such module has been registered')\n\t\t\t\telse\n\t\t\t\t\treturn superRequire(name)\n\t\t\t\tend\n\t\t\tend\n\n\t\t\tloaded[name] = loadingPlaceholder\n\t\t\tloadedModule = modules[name](require, loaded, register, modules)\n\t\t\tloaded[name] = loadedModule\n\t\tend\n\n\t\treturn loadedModule\n\tend\n\n\treturn require, loaded, register, modules\nend)(nil)\n__bundle_register(\"Global.-1.lua\", function(require, _LOADED, __bundle_register, __bundle_modules)\nrequire(\"src/setup\")\nend)\n__bundle_register(\"src/setup\", function(require, _LOADED, __bundle_register, __bundle_modules)\nrequire(\"src/utils\")\nlocal idDeck_guid = \"937c8b\"\nlocal charDeck_guid = \"e0c75d\"\nlocal setupButton_guid = \"2816c9\"\nfunction onLoad()\n    idDeck = getObjectFromGUID(idDeck_guid)\n    charDeck = getObjectFromGUID(charDeck_guid)\n    setupButton = getObjectFromGUID(setupButton_guid)\n    setupButton.createButton(getSetUpButtonParameters())\nend\nfunction getSetUpButtonParameters()\n    return {\n        click_function = 'setup',\n        function_owner = nil,\n        label = \"Set up\",\n        position = {0,0.8,0},\n        rotation = {0,180,0},\n        width = 500,\n        height = 500,\n        font_size = 150,\n        fontStyle = \"Bold\"\n    }\nend\nfunction transferObjectsWithSameTag(source, target, tag)\n    for _, object in ipairs(source.getObjects()) do\n        if not contains(object.tags, tag) then\n            local takenObject = source.takeObject({index = object.index, smooth = true})\n            target.putObject(takenObject)\n        end\n    end\nend\nfunction distributeCardsToEachZone(deck, zones)\n    deck.shuffle()\n    for _, zone in ipairs(zones) do\n        deck.takeObject().setPosition(zone.getPosition())\n    end\nend\nfunction removeUnusedPlayerObjects()\n    local player_colors = {\"White\", \"Red\", \"Yellow\", \"Green\", \"Blue\", \"Purple\", \"Pink\"}\n    for i, color in ipairs(player_colors) do\n        if not contains(getSeatedPlayers(), color) then\n            for i, object in ipairs(getObjectsWithTag(color)) do\n                destroyObject(object)\n            end\n        end \n    end\nend\nfunction dealCards(deck, num)\n    deck.shuffle()\n    deck.deal(num)\nend\nfunction setup()\n    local numPlayers = length(getSeatedPlayers())\n    if numPlayers < 3 or numPlayers > 7 then\n       broadcastToAll(\"[WARNING]: This game only supports 3 - 7 players\", \"Yellow\") \n       return\n    end\n    removeUnusedPlayerObjects()\n    broadcastToAll(\"Select a character card and put it into your panel\")\n    dealCards(charDeck, 3)\n    setupButton.clearButtons()\n    local playerTag = \"player_\" .. tostring(numPlayers)\n    transferObjectsWithSameTag(idDeck, charDeck, playerTag)\n    distributeCardsToEachZone(idDeck, getObjectsWithTag(\"identity_zone\"))\n    charDeck.putObject(idDeck)\nend\nend)\n__bundle_register(\"src/utils\", function(require, _LOADED, __bundle_register, __bundle_modules)\nfunction contains(t, e)\r\n  for i = 1,#t do\r\n    if t[i] == e then return true end\r\n  end\r\n  return false\r\nend\r\nfunction length(T)\r\n  local count = 0\r\n  for _ in pairs(T) do\r\n    count = count + 1\r\n    end\r\n  return count\r\nend\r\n\r\n\r\n\nend)\nreturn __bundle_require(\"Global.-1.lua\")",
+  "LuaScript": "-- Bundled by luabundle {\"rootModuleName\":\"Global.-1.lua\",\"version\":\"1.6.0\"}\nlocal __bundle_require, __bundle_loaded, __bundle_register, __bundle_modules = (function(superRequire)\n\tlocal loadingPlaceholder = {[{}] = true}\n\n\tlocal register\n\tlocal modules = {}\n\n\tlocal require\n\tlocal loaded = {}\n\n\tregister = function(name, body)\n\t\tif not modules[name] then\n\t\t\tmodules[name] = body\n\t\tend\n\tend\n\n\trequire = function(name)\n\t\tlocal loadedModule = loaded[name]\n\n\t\tif loadedModule then\n\t\t\tif loadedModule == loadingPlaceholder then\n\t\t\t\treturn nil\n\t\t\tend\n\t\telse\n\t\t\tif not modules[name] then\n\t\t\t\tif not superRequire then\n\t\t\t\t\tlocal identifier = type(name) == 'string' and '\\\"' .. name .. '\\\"' or tostring(name)\n\t\t\t\t\terror('Tried to require ' .. identifier .. ', but no such module has been registered')\n\t\t\t\telse\n\t\t\t\t\treturn superRequire(name)\n\t\t\t\tend\n\t\t\tend\n\n\t\t\tloaded[name] = loadingPlaceholder\n\t\t\tloadedModule = modules[name](require, loaded, register, modules)\n\t\t\tloaded[name] = loadedModule\n\t\tend\n\n\t\treturn loadedModule\n\tend\n\n\treturn require, loaded, register, modules\nend)(nil)\n__bundle_register(\"Global.-1.lua\", function(require, _LOADED, __bundle_register, __bundle_modules)\nrequire(\"src/setup\")\nend)\n__bundle_register(\"src/setup\", function(require, _LOADED, __bundle_register, __bundle_modules)\nrequire(\"src/utils\")\nlocal idDeck_guid = \"937c8b\"\nlocal charDeck_guid = \"e0c75d\"\nlocal setupButton_guid = \"2816c9\"\nfunction onLoad()\n    idDeck = getObjectFromGUID(idDeck_guid)\n    charDeck = getObjectFromGUID(charDeck_guid)\n    setupButton = getObjectFromGUID(setupButton_guid)\n    setupButton.createButton(getSetUpButtonParameters())\nend\nfunction getSetUpButtonParameters()\n    return {\n        click_function = 'setUp',\n        function_owner = nil,\n        label = \"Set up\",\n        position = {0,0.8,0},\n        rotation = {0,180,0},\n        width = 500,\n        height = 500,\n        font_size = 150,\n        fontStyle = \"Bold\"\n    }\nend\nfunction transferObjectsWithSameTag(source, target, tag)\n    for _, object in ipairs(source.getObjects()) do\n        if not contains(object.tags, tag) then\n            local takenObject = source.takeObject({index = object.index, smooth = true})\n            target.putObject(takenObject)\n        end\n    end\nend\nfunction distributeCardsToEachZone(deck, zones)\n    deck.shuffle()\n    for _, zone in ipairs(zones) do\n        local card = deck.takeObject()\n        card.setPosition(zone.getPosition())\n        card.setRotation(zone.getRotation())\n    end\nend\nfunction removeUnusedPlayerObjects()\n    -- this function assumes that target objects have corresponding tags (i.e. color name) to their owner\n    local player_colors = {\"White\", \"Red\", \"Yellow\", \"Green\", \"Blue\", \"Purple\", \"Pink\"}\n    for i, color in ipairs(player_colors) do\n        if not contains(getSeatedPlayers(), color) then\n            for i, object in ipairs(getObjectsWithTag(color)) do\n                destroyObject(object)\n            end\n        end \n    end\nend\nfunction dealCards(deck, num)\n    deck.shuffle()\n    deck.deal(num)\nend\nfunction setUp()\n    local numPlayers = length(getSeatedPlayers())\n    if numPlayers < 3 or numPlayers > 7 then\n       broadcastToAll(\"[WARNING]: This game only supports 3 - 7 players\", \"Yellow\") \n       return\n    end\n    removeUnusedPlayerObjects()\n    broadcastToAll(\"[INFO]: Select a character card and put it into your panel\")\n    dealCards(charDeck, 3)\n    setupButton.clearButtons()\n    local playerTag = \"player_\" .. tostring(numPlayers)\n    transferObjectsWithSameTag(idDeck, charDeck, playerTag)\n    distributeCardsToEachZone(idDeck, getObjectsWithTag(\"identity_zone\"))\n    charDeck.putObject(idDeck)\nend\nend)\n__bundle_register(\"src/utils\", function(require, _LOADED, __bundle_register, __bundle_modules)\nfunction contains(t, e)\n  for i = 1,#t do\n    if t[i] == e then return true end\n  end\n  return false\nend\nfunction length(T)\n  local count = 0\n  for _ in pairs(T) do\n    count = count + 1\n    end\n  return count\nend\n\n\n\nend)\nreturn __bundle_require(\"Global.-1.lua\")",
   "LuaScriptState": "",
   "XmlUI": "<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->",
   "SnapPoints": [
@@ -370,646 +370,6 @@
             "z": 4.65217447
           },
           "Rotation": {
-            "x": -6.990823E-07,
-            "y": 359.978882,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 6.421097,
-            "y": 0.5922457,
-            "z": 4.73291874
-          },
-          "Rotation": {
-            "x": 1.98304019E-06,
-            "y": 359.978638,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 2.427551,
-            "y": 0.592245936,
-            "z": 4.69387674
-          },
-          "Rotation": {
-            "x": 1.28216871E-05,
-            "y": 359.947662,
-            "z": -1.25306983E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.498179,
-            "y": 0.5922418,
-            "z": 4.631107
-          },
-          "Rotation": {
-            "x": 6.417615E-06,
-            "y": 359.9787,
-            "z": 4.43342827E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.482119,
-            "y": 0.5922434,
-            "z": -4.484806
-          },
-          "Rotation": {
-            "x": 7.945485E-06,
-            "y": 359.9787,
-            "z": -1.21888519E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -1.75949085,
-            "y": 0.592245162,
-            "z": -4.44758368
-          },
-          "Rotation": {
-            "x": 3.21791845E-06,
-            "y": 359.979279,
-            "z": 180.0
-          }
-        }
-      ]
-    },
-    {
-      "GUID": "a26536",
-      "Name": "Custom_Board",
-      "Transform": {
-        "posX": -15.0,
-        "posY": 0.9820624,
-        "posZ": 12.999999,
-        "rotX": -2.24769374E-05,
-        "rotY": 359.978516,
-        "rotZ": 1.58932181E-07,
-        "scaleX": 0.375000447,
-        "scaleY": 0.375000447,
-        "scaleZ": 0.375000447
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 0.7867647,
-        "g": 0.7867647,
-        "b": 0.7867647
-      },
-      "Tags": [
-        "Green"
-      ],
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomImage": {
-        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
-        "ImageSecondaryURL": "",
-        "ImageScalar": 1.0,
-        "WidthScale": 1.44722223
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "AttachedSnapPoints": [
-        {
-          "Position": {
-            "x": -1.70487273,
-            "y": 0.5922457,
-            "z": 4.65217447
-          },
-          "Rotation": {
-            "x": -6.99082364E-07,
-            "y": 359.978882,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 6.421097,
-            "y": 0.5922457,
-            "z": 4.73291874
-          },
-          "Rotation": {
-            "x": 1.98304019E-06,
-            "y": 359.978638,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 2.427551,
-            "y": 0.592245936,
-            "z": 4.69387674
-          },
-          "Rotation": {
-            "x": 1.2821688E-05,
-            "y": 359.947662,
-            "z": -1.25307E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.498179,
-            "y": 0.5922418,
-            "z": 4.631107
-          },
-          "Rotation": {
-            "x": 6.41761562E-06,
-            "y": 359.9787,
-            "z": 4.43342827E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.482119,
-            "y": 0.5922434,
-            "z": -4.484806
-          },
-          "Rotation": {
-            "x": 7.945485E-06,
-            "y": 359.9787,
-            "z": -1.21888519E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -1.75949085,
-            "y": 0.592245162,
-            "z": -4.44758368
-          },
-          "Rotation": {
-            "x": 3.21791845E-06,
-            "y": 359.979279,
-            "z": 180.0
-          }
-        }
-      ]
-    },
-    {
-      "GUID": "e9e844",
-      "Name": "Custom_Board",
-      "Transform": {
-        "posX": 14.9996271,
-        "posY": 0.9820637,
-        "posZ": 12.994194,
-        "rotX": 4.028061E-06,
-        "rotY": 0.03271997,
-        "rotZ": -5.5493242E-08,
-        "scaleX": 0.375000447,
-        "scaleY": 0.375000447,
-        "scaleZ": 0.375000447
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 0.7867647,
-        "g": 0.7867647,
-        "b": 0.7867647
-      },
-      "Tags": [
-        "Blue"
-      ],
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomImage": {
-        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
-        "ImageSecondaryURL": "",
-        "ImageScalar": 1.0,
-        "WidthScale": 1.44722223
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "AttachedSnapPoints": [
-        {
-          "Position": {
-            "x": -1.70487273,
-            "y": 0.5922457,
-            "z": 4.65217447
-          },
-          "Rotation": {
-            "x": -6.990825E-07,
-            "y": 359.978882,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 6.421097,
-            "y": 0.5922457,
-            "z": 4.73291874
-          },
-          "Rotation": {
-            "x": 1.98304019E-06,
-            "y": 359.978638,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 2.427551,
-            "y": 0.592245936,
-            "z": 4.69387674
-          },
-          "Rotation": {
-            "x": 1.282169E-05,
-            "y": 359.947662,
-            "z": -1.25307025E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.498179,
-            "y": 0.5922418,
-            "z": 4.631107
-          },
-          "Rotation": {
-            "x": 6.41761653E-06,
-            "y": 359.9787,
-            "z": 4.43342827E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.482119,
-            "y": 0.5922434,
-            "z": -4.484806
-          },
-          "Rotation": {
-            "x": 7.945485E-06,
-            "y": 359.9787,
-            "z": -1.21888519E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -1.75949085,
-            "y": 0.592245162,
-            "z": -4.44758368
-          },
-          "Rotation": {
-            "x": 3.21791845E-06,
-            "y": 359.979279,
-            "z": 180.0
-          }
-        }
-      ]
-    },
-    {
-      "GUID": "2a84df",
-      "Name": "Custom_Board",
-      "Transform": {
-        "posX": 14.999999,
-        "posY": 0.9820629,
-        "posZ": -12.0,
-        "rotX": 2.539379E-06,
-        "rotY": 179.9661,
-        "rotZ": 1.6444821E-07,
-        "scaleX": 0.375000447,
-        "scaleY": 0.375000447,
-        "scaleZ": 0.375000447
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 0.7867647,
-        "g": 0.7867647,
-        "b": 0.7867647
-      },
-      "Tags": [
-        "Pink"
-      ],
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomImage": {
-        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
-        "ImageSecondaryURL": "",
-        "ImageScalar": 1.0,
-        "WidthScale": 1.44722223
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "AttachedSnapPoints": [
-        {
-          "Position": {
-            "x": -1.70487273,
-            "y": 0.5922457,
-            "z": 4.65217447
-          },
-          "Rotation": {
-            "x": -6.99082534E-07,
-            "y": 359.978882,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 6.421097,
-            "y": 0.5922457,
-            "z": 4.73291874
-          },
-          "Rotation": {
-            "x": 1.98304019E-06,
-            "y": 359.978638,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 2.427551,
-            "y": 0.592245936,
-            "z": 4.69387674
-          },
-          "Rotation": {
-            "x": 1.28216907E-05,
-            "y": 359.947662,
-            "z": -1.25307025E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.498179,
-            "y": 0.5922418,
-            "z": 4.631107
-          },
-          "Rotation": {
-            "x": 6.417617E-06,
-            "y": 359.9787,
-            "z": 4.43342827E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.482119,
-            "y": 0.5922434,
-            "z": -4.484806
-          },
-          "Rotation": {
-            "x": 7.945485E-06,
-            "y": 359.9787,
-            "z": -1.21888519E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -1.75949085,
-            "y": 0.592245162,
-            "z": -4.44758368
-          },
-          "Rotation": {
-            "x": 3.21791845E-06,
-            "y": 359.979279,
-            "z": 180.0
-          }
-        }
-      ]
-    },
-    {
-      "GUID": "562e8e",
-      "Name": "Custom_Board",
-      "Transform": {
-        "posX": 1.02412116E-07,
-        "posY": 0.982062757,
-        "posZ": -12.000001,
-        "rotX": -2.52931227E-06,
-        "rotY": 179.9746,
-        "rotZ": 1.6034538E-07,
-        "scaleX": 0.375000447,
-        "scaleY": 0.375000447,
-        "scaleZ": 0.375000447
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 0.7867647,
-        "g": 0.7867647,
-        "b": 0.7867647
-      },
-      "Tags": [
-        "White"
-      ],
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomImage": {
-        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
-        "ImageSecondaryURL": "",
-        "ImageScalar": 1.0,
-        "WidthScale": 1.44722223
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "AttachedSnapPoints": [
-        {
-          "Position": {
-            "x": -1.70487273,
-            "y": 0.5922457,
-            "z": 4.65217447
-          },
-          "Rotation": {
-            "x": -6.990824E-07,
-            "y": 359.978882,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 6.421097,
-            "y": 0.5922457,
-            "z": 4.73291874
-          },
-          "Rotation": {
-            "x": 1.98304019E-06,
-            "y": 359.978638,
-            "z": 180.0
-          }
-        },
-        {
-          "Position": {
-            "x": 2.427551,
-            "y": 0.592245936,
-            "z": 4.69387674
-          },
-          "Rotation": {
-            "x": 1.28216889E-05,
-            "y": 359.947662,
-            "z": -1.25307011E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.498179,
-            "y": 0.5922418,
-            "z": 4.631107
-          },
-          "Rotation": {
-            "x": 6.417616E-06,
-            "y": 359.9787,
-            "z": 4.43342827E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -6.482119,
-            "y": 0.5922434,
-            "z": -4.484806
-          },
-          "Rotation": {
-            "x": 7.945485E-06,
-            "y": 359.9787,
-            "z": -1.21888519E-07
-          }
-        },
-        {
-          "Position": {
-            "x": -1.75949085,
-            "y": 0.592245162,
-            "z": -4.44758368
-          },
-          "Rotation": {
-            "x": 3.21791845E-06,
-            "y": 359.979279,
-            "z": 180.0
-          }
-        }
-      ]
-    },
-    {
-      "GUID": "a442be",
-      "Name": "Custom_Board",
-      "Transform": {
-        "posX": 17.07407,
-        "posY": 0.982061744,
-        "posZ": 0.511031866,
-        "rotX": -4.542765E-06,
-        "rotY": 90.02085,
-        "rotZ": -1.41595569E-06,
-        "scaleX": 0.375000447,
-        "scaleY": 0.375000447,
-        "scaleZ": 0.375000447
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 0.7867647,
-        "g": 0.7867647,
-        "b": 0.7867647
-      },
-      "Tags": [
-        "Purple"
-      ],
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "CustomImage": {
-        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
-        "ImageSecondaryURL": "",
-        "ImageScalar": 1.0,
-        "WidthScale": 1.44722223
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": "",
-      "AttachedSnapPoints": [
-        {
-          "Position": {
-            "x": -1.70487273,
-            "y": 0.5922457,
-            "z": 4.65217447
-          },
-          "Rotation": {
             "x": -6.990826E-07,
             "y": 359.978882,
             "z": 180.0
@@ -1078,15 +438,15 @@
       ]
     },
     {
-      "GUID": "2ef9b7",
+      "GUID": "a26536",
       "Name": "Custom_Board",
       "Transform": {
-        "posX": -16.999176,
-        "posY": 0.982063,
-        "posZ": 0.318844736,
-        "rotX": -9.692084E-06,
-        "rotY": 270.0193,
-        "rotZ": 9.045617E-06,
+        "posX": -15.0,
+        "posY": 0.9820624,
+        "posZ": 12.999999,
+        "rotX": -2.24769374E-05,
+        "rotY": 359.978516,
+        "rotZ": 1.58932181E-07,
         "scaleX": 0.375000447,
         "scaleY": 0.375000447,
         "scaleZ": 0.375000447
@@ -1105,7 +465,7 @@
         "b": 0.7867647
       },
       "Tags": [
-        "Yellow"
+        "Green"
       ],
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1206,6 +566,646 @@
       ]
     },
     {
+      "GUID": "e9e844",
+      "Name": "Custom_Board",
+      "Transform": {
+        "posX": 14.9996271,
+        "posY": 0.9820637,
+        "posZ": 12.994194,
+        "rotX": 4.028061E-06,
+        "rotY": 0.03271997,
+        "rotZ": -5.549318E-08,
+        "scaleX": 0.375000447,
+        "scaleY": 0.375000447,
+        "scaleZ": 0.375000447
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.7867647,
+        "g": 0.7867647,
+        "b": 0.7867647
+      },
+      "Tags": [
+        "Blue"
+      ],
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomImage": {
+        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
+        "ImageSecondaryURL": "",
+        "ImageScalar": 1.0,
+        "WidthScale": 1.44722223
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "AttachedSnapPoints": [
+        {
+          "Position": {
+            "x": -1.70487273,
+            "y": 0.5922457,
+            "z": 4.65217447
+          },
+          "Rotation": {
+            "x": -6.99082761E-07,
+            "y": 359.978882,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 6.421097,
+            "y": 0.5922457,
+            "z": 4.73291874
+          },
+          "Rotation": {
+            "x": 1.98304019E-06,
+            "y": 359.978638,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 2.427551,
+            "y": 0.592245936,
+            "z": 4.69387674
+          },
+          "Rotation": {
+            "x": 1.28216943E-05,
+            "y": 359.947662,
+            "z": -1.25307025E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.498179,
+            "y": 0.5922418,
+            "z": 4.631107
+          },
+          "Rotation": {
+            "x": 6.417619E-06,
+            "y": 359.9787,
+            "z": 4.43342827E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.482119,
+            "y": 0.5922434,
+            "z": -4.484806
+          },
+          "Rotation": {
+            "x": 7.945485E-06,
+            "y": 359.9787,
+            "z": -1.21888519E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -1.75949085,
+            "y": 0.592245162,
+            "z": -4.44758368
+          },
+          "Rotation": {
+            "x": 3.21791845E-06,
+            "y": 359.979279,
+            "z": 180.0
+          }
+        }
+      ]
+    },
+    {
+      "GUID": "2a84df",
+      "Name": "Custom_Board",
+      "Transform": {
+        "posX": 14.999999,
+        "posY": 0.9820629,
+        "posZ": -12.0,
+        "rotX": 2.53938083E-06,
+        "rotY": 179.9661,
+        "rotZ": 1.6444821E-07,
+        "scaleX": 0.375000447,
+        "scaleY": 0.375000447,
+        "scaleZ": 0.375000447
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.7867647,
+        "g": 0.7867647,
+        "b": 0.7867647
+      },
+      "Tags": [
+        "Pink"
+      ],
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomImage": {
+        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
+        "ImageSecondaryURL": "",
+        "ImageScalar": 1.0,
+        "WidthScale": 1.44722223
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "AttachedSnapPoints": [
+        {
+          "Position": {
+            "x": -1.70487273,
+            "y": 0.5922457,
+            "z": 4.65217447
+          },
+          "Rotation": {
+            "x": -6.990828E-07,
+            "y": 359.978882,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 6.421097,
+            "y": 0.5922457,
+            "z": 4.73291874
+          },
+          "Rotation": {
+            "x": 1.98304019E-06,
+            "y": 359.978638,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 2.427551,
+            "y": 0.592245936,
+            "z": 4.69387674
+          },
+          "Rotation": {
+            "x": 1.28216952E-05,
+            "y": 359.947662,
+            "z": -1.25307025E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.498179,
+            "y": 0.5922418,
+            "z": 4.631107
+          },
+          "Rotation": {
+            "x": 6.41761926E-06,
+            "y": 359.9787,
+            "z": 4.43342827E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.482119,
+            "y": 0.5922434,
+            "z": -4.484806
+          },
+          "Rotation": {
+            "x": 7.945485E-06,
+            "y": 359.9787,
+            "z": -1.21888519E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -1.75949085,
+            "y": 0.592245162,
+            "z": -4.44758368
+          },
+          "Rotation": {
+            "x": 3.21791845E-06,
+            "y": 359.979279,
+            "z": 180.0
+          }
+        }
+      ]
+    },
+    {
+      "GUID": "562e8e",
+      "Name": "Custom_Board",
+      "Transform": {
+        "posX": 1.02412116E-07,
+        "posY": 0.982062757,
+        "posZ": -12.000001,
+        "rotX": -2.52931318E-06,
+        "rotY": 179.9746,
+        "rotZ": 1.60345522E-07,
+        "scaleX": 0.375000447,
+        "scaleY": 0.375000447,
+        "scaleZ": 0.375000447
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.7867647,
+        "g": 0.7867647,
+        "b": 0.7867647
+      },
+      "Tags": [
+        "White"
+      ],
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomImage": {
+        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
+        "ImageSecondaryURL": "",
+        "ImageScalar": 1.0,
+        "WidthScale": 1.44722223
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "AttachedSnapPoints": [
+        {
+          "Position": {
+            "x": -1.70487273,
+            "y": 0.5922457,
+            "z": 4.65217447
+          },
+          "Rotation": {
+            "x": -6.990827E-07,
+            "y": 359.978882,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 6.421097,
+            "y": 0.5922457,
+            "z": 4.73291874
+          },
+          "Rotation": {
+            "x": 1.98304019E-06,
+            "y": 359.978638,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 2.427551,
+            "y": 0.592245936,
+            "z": 4.69387674
+          },
+          "Rotation": {
+            "x": 1.28216934E-05,
+            "y": 359.947662,
+            "z": -1.25307025E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.498179,
+            "y": 0.5922418,
+            "z": 4.631107
+          },
+          "Rotation": {
+            "x": 6.41761835E-06,
+            "y": 359.9787,
+            "z": 4.43342827E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.482119,
+            "y": 0.5922434,
+            "z": -4.484806
+          },
+          "Rotation": {
+            "x": 7.945485E-06,
+            "y": 359.9787,
+            "z": -1.21888519E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -1.75949085,
+            "y": 0.592245162,
+            "z": -4.44758368
+          },
+          "Rotation": {
+            "x": 3.21791845E-06,
+            "y": 359.979279,
+            "z": 180.0
+          }
+        }
+      ]
+    },
+    {
+      "GUID": "a442be",
+      "Name": "Custom_Board",
+      "Transform": {
+        "posX": 17.07407,
+        "posY": 0.982061744,
+        "posZ": 0.511031866,
+        "rotX": -4.542765E-06,
+        "rotY": 90.02085,
+        "rotZ": -1.41595569E-06,
+        "scaleX": 0.375000447,
+        "scaleY": 0.375000447,
+        "scaleZ": 0.375000447
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.7867647,
+        "g": 0.7867647,
+        "b": 0.7867647
+      },
+      "Tags": [
+        "Purple"
+      ],
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomImage": {
+        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
+        "ImageSecondaryURL": "",
+        "ImageScalar": 1.0,
+        "WidthScale": 1.44722223
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "AttachedSnapPoints": [
+        {
+          "Position": {
+            "x": -1.70487273,
+            "y": 0.5922457,
+            "z": 4.65217447
+          },
+          "Rotation": {
+            "x": -6.990829E-07,
+            "y": 359.978882,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 6.421097,
+            "y": 0.5922457,
+            "z": 4.73291874
+          },
+          "Rotation": {
+            "x": 1.98304019E-06,
+            "y": 359.978638,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 2.427551,
+            "y": 0.592245936,
+            "z": 4.69387674
+          },
+          "Rotation": {
+            "x": 1.28216961E-05,
+            "y": 359.947662,
+            "z": -1.25307025E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.498179,
+            "y": 0.5922418,
+            "z": 4.631107
+          },
+          "Rotation": {
+            "x": 6.41761972E-06,
+            "y": 359.9787,
+            "z": 4.43342827E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.482119,
+            "y": 0.5922434,
+            "z": -4.484806
+          },
+          "Rotation": {
+            "x": 7.945485E-06,
+            "y": 359.9787,
+            "z": -1.21888519E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -1.75949085,
+            "y": 0.592245162,
+            "z": -4.44758368
+          },
+          "Rotation": {
+            "x": 3.21791845E-06,
+            "y": 359.979279,
+            "z": 180.0
+          }
+        }
+      ]
+    },
+    {
+      "GUID": "2ef9b7",
+      "Name": "Custom_Board",
+      "Transform": {
+        "posX": -16.999176,
+        "posY": 0.982063,
+        "posZ": 0.318844736,
+        "rotX": -9.692084E-06,
+        "rotY": 270.0193,
+        "rotZ": 9.045617E-06,
+        "scaleX": 0.375000447,
+        "scaleY": 0.375000447,
+        "scaleZ": 0.375000447
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.7867647,
+        "g": 0.7867647,
+        "b": 0.7867647
+      },
+      "Tags": [
+        "Yellow"
+      ],
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": true,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "CustomImage": {
+        "ImageURL": "http://cloud-3.steamusercontent.com/ugc/2057633340020313087/952D9E0B153AE35473DA1E5E4485C19CC13A7F9B/",
+        "ImageSecondaryURL": "",
+        "ImageScalar": 1.0,
+        "WidthScale": 1.44722223
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "AttachedSnapPoints": [
+        {
+          "Position": {
+            "x": -1.70487273,
+            "y": 0.5922457,
+            "z": 4.65217447
+          },
+          "Rotation": {
+            "x": -6.99082932E-07,
+            "y": 359.978882,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 6.421097,
+            "y": 0.5922457,
+            "z": 4.73291874
+          },
+          "Rotation": {
+            "x": 1.98304019E-06,
+            "y": 359.978638,
+            "z": 180.0
+          }
+        },
+        {
+          "Position": {
+            "x": 2.427551,
+            "y": 0.592245936,
+            "z": 4.69387674
+          },
+          "Rotation": {
+            "x": 1.28216971E-05,
+            "y": 359.947662,
+            "z": -1.25307025E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.498179,
+            "y": 0.5922418,
+            "z": 4.631107
+          },
+          "Rotation": {
+            "x": 6.41762E-06,
+            "y": 359.9787,
+            "z": 4.43342827E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -6.482119,
+            "y": 0.5922434,
+            "z": -4.484806
+          },
+          "Rotation": {
+            "x": 7.945485E-06,
+            "y": 359.9787,
+            "z": -1.21888519E-07
+          }
+        },
+        {
+          "Position": {
+            "x": -1.75949085,
+            "y": 0.592245162,
+            "z": -4.44758368
+          },
+          "Rotation": {
+            "x": 3.21791845E-06,
+            "y": 359.979279,
+            "z": 180.0
+          }
+        }
+      ]
+    },
+    {
       "GUID": "bceb10",
       "Name": "HandTrigger",
       "Transform": {
@@ -1231,7 +1231,7 @@
         "r": 0.856,
         "g": 0.09999997,
         "b": 0.09399996,
-        "a": 0.0
+        "a": 0.5
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1278,7 +1278,7 @@
         "r": 0.905,
         "g": 0.898,
         "b": 0.171999961,
-        "a": 0.0
+        "a": 0.5
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1325,7 +1325,7 @@
         "r": 0.627,
         "g": 0.124999978,
         "b": 0.941,
-        "a": 0.0
+        "a": 0.5
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1372,7 +1372,7 @@
         "r": 0.117999978,
         "g": 0.53,
         "b": 1.0,
-        "a": 0.0
+        "a": 0.5
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1419,7 +1419,7 @@
         "r": 1.0,
         "g": 1.0,
         "b": 1.0,
-        "a": 0.0
+        "a": 0.5
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1466,7 +1466,7 @@
         "r": 0.191999972,
         "g": 0.701,
         "b": 0.167999953,
-        "a": 0.0
+        "a": 0.5
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1513,7 +1513,7 @@
         "r": 0.96,
         "g": 0.438999981,
         "b": 0.807,
-        "a": 0.0
+        "a": 0.5
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -1538,10 +1538,10 @@
       "GUID": "4a8259",
       "Name": "Deck",
       "Transform": {
-        "posX": -0.570078969,
+        "posX": -0.570078731,
         "posY": 1.3997519,
         "posZ": 5.50006962,
-        "rotX": -1.85015452E-08,
+        "rotX": 2.7116636E-08,
         "rotY": 179.9929,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -6741,9 +6741,9 @@
       "GUID": "c1f576",
       "Name": "3DText",
       "Transform": {
-        "posX": -0.5664606,
-        "posY": 0.961106837,
-        "posZ": 2.999941,
+        "posX": -0.566461146,
+        "posY": 0.96109736,
+        "posZ": 2.99992847,
         "rotX": 90.0,
         "rotY": -2.30296728E-12,
         "rotZ": 0.0,
@@ -6795,9 +6795,9 @@
       "GUID": "56e6a1",
       "Name": "3DText",
       "Transform": {
-        "posX": 3.4359436,
-        "posY": 0.9611056,
-        "posZ": 2.999941,
+        "posX": 3.43595576,
+        "posY": 0.9610961,
+        "posZ": 2.99992847,
         "rotX": 90.0,
         "rotY": -2.30296728E-12,
         "rotZ": 0.0,
@@ -6849,9 +6849,9 @@
       "GUID": "0eb9eb",
       "Name": "3DText",
       "Transform": {
-        "posX": -4.44295,
-        "posY": 0.9611072,
-        "posZ": 3.05016637,
+        "posX": -4.44296169,
+        "posY": 0.9610977,
+        "posZ": 3.050154,
         "rotX": 90.0,
         "rotY": -2.30296728E-12,
         "rotZ": 0.0,
@@ -6906,7 +6906,7 @@
         "posX": -0.513273954,
         "posY": 1.16000032,
         "posZ": 13.6253138,
-        "rotX": 3.95776425E-08,
+        "rotX": 5.684975E-08,
         "rotY": 180.0,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -6957,7 +6957,7 @@
         "posX": 3.440781,
         "posY": 1.10128152,
         "posZ": 5.49945068,
-        "rotX": -2.131614E-08,
+        "rotX": -3.744191E-09,
         "rotY": 179.9781,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -8393,8 +8393,8 @@
         "posY": 3.84299,
         "posZ": -14.2487974,
         "rotX": 0.0,
-        "rotY": 0.0,
-        "rotZ": 0.0,
+        "rotY": 180.0,
+        "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 5.1,
         "scaleZ": 1.0
@@ -8443,8 +8443,8 @@
         "posY": 3.8429904,
         "posZ": -14.334198,
         "rotX": 0.0,
-        "rotY": 0.0,
-        "rotZ": 0.0,
+        "rotY": 180.0,
+        "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 5.1,
         "scaleZ": 1.0
@@ -8493,8 +8493,8 @@
         "posY": 3.842991,
         "posZ": 5.18553829,
         "rotX": 0.0,
-        "rotY": 0.0,
-        "rotZ": 0.0,
+        "rotY": 270.0,
+        "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 5.1,
         "scaleZ": 1.0
@@ -8544,7 +8544,7 @@
         "posZ": 15.3303795,
         "rotX": 0.0,
         "rotY": 0.0,
-        "rotZ": 0.0,
+        "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 5.1,
         "scaleZ": 1.0
@@ -8594,7 +8594,7 @@
         "posZ": 15.3392334,
         "rotX": 0.0,
         "rotY": 0.0,
-        "rotZ": 0.0,
+        "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 5.1,
         "scaleZ": 1.0
@@ -8643,8 +8643,8 @@
         "posY": 3.842988,
         "posZ": -4.314012,
         "rotX": 0.0,
-        "rotY": 0.0,
-        "rotZ": 0.0,
+        "rotY": 90.0,
+        "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 5.1,
         "scaleZ": 1.0
@@ -8693,8 +8693,8 @@
         "posY": 3.84299,
         "posZ": -14.2824764,
         "rotX": 0.0,
-        "rotY": 0.0,
-        "rotZ": 0.0,
+        "rotY": 180.0,
+        "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 5.1,
         "scaleZ": 1.0
@@ -8742,7 +8742,7 @@
         "posX": -4.439999,
         "posY": 1.01944292,
         "posZ": 5.49999952,
-        "rotX": -1.74243226E-07,
+        "rotX": 3.18260156E-08,
         "rotY": 180.0,
         "rotZ": 180.0,
         "scaleX": 1.0,
