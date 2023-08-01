@@ -1,16 +1,12 @@
-require("src/utils")
+local setup = {}
+local utils = require("src.utils.utils")
+local log = require("src.utils.log")
 local idDeck_guid = "937c8b"
 local charDeck_guid = "e0c75d"
 local setupButton_guid = "2816c9"
-function onLoad()
-    idDeck = getObjectFromGUID(idDeck_guid)
-    charDeck = getObjectFromGUID(charDeck_guid)
-    setupButton = getObjectFromGUID(setupButton_guid)
-    setupButton.createButton(getSetUpButtonParameters())
-end
-function getSetUpButtonParameters()
+local function getSetUpButtonParameters()
     return {
-        click_function = 'setUp',
+        click_function = 'globalSetUp',
         function_owner = nil,
         label = "Set up",
         position = {0,0.8,0},
@@ -21,15 +17,22 @@ function getSetUpButtonParameters()
         fontStyle = "Bold"
     }
 end
-function transferObjectsWithSameTag(source, target, tag)
+function setup.onLoad()
+    log.dev('setup.onLoad')
+    idDeck = getObjectFromGUID(idDeck_guid)
+    charDeck = getObjectFromGUID(charDeck_guid)
+    setupButton = getObjectFromGUID(setupButton_guid)
+    setupButton.createButton(getSetUpButtonParameters())
+end
+local function transferObjectsWithSameTag(source, target, tag)
     for _, object in ipairs(source.getObjects()) do
-        if not contains(object.tags, tag) then
+        if not utils.contains(object.tags, tag) then
             local takenObject = source.takeObject({index = object.index, smooth = true})
             target.putObject(takenObject)
         end
     end
 end
-function distributeCardsToEachZone(deck, zones)
+local function distributeCardsToEachZone(deck, zones)
     deck.shuffle()
     for _, zone in ipairs(zones) do
         local card = deck.takeObject()
@@ -37,23 +40,23 @@ function distributeCardsToEachZone(deck, zones)
         card.setRotation(zone.getRotation())
     end
 end
-function removeUnusedPlayerObjects()
+local function removeUnusedPlayerObjects()
     -- this function assumes that target objects have corresponding tags (i.e. color name) to their owner
     local player_colors = {"White", "Red", "Yellow", "Green", "Blue", "Purple", "Pink"}
     for i, color in ipairs(player_colors) do
-        if not contains(getSeatedPlayers(), color) then
+        if not utils.contains(getSeatedPlayers(), color) then
             for i, object in ipairs(getObjectsWithTag(color)) do
                 destroyObject(object)
             end
         end 
     end
 end
-function dealCards(deck, num)
+local function dealCards(deck, num)
     deck.shuffle()
     deck.deal(num)
 end
-function setUp()
-    local numPlayers = length(getSeatedPlayers())
+function setup.setUp()
+    local numPlayers = utils.length(getSeatedPlayers())
     if numPlayers < 3 or numPlayers > 7 then
        broadcastToAll("[WARNING]: This game only supports 3 - 7 players", "Yellow") 
        return
@@ -67,3 +70,7 @@ function setUp()
     distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
     charDeck.putObject(idDeck)
 end
+function globalSetUp()
+    setup.setUp()
+end
+return setup
