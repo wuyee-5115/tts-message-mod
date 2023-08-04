@@ -32,12 +32,21 @@ local function transferObjectsWithSameTag(source, target, tag)
         end
     end
 end
+local function whosObject(object)
+    local seatedPlayers = getSeatedPlayers()
+    for _, color in ipairs(seatedPlayers) do
+        if utils.contains(object.getTags(), color) then
+            return color
+        end
+    end
+end
 local function distributeCardsToEachZone(deck, zones)
     deck.shuffle()
     for _, zone in ipairs(zones) do
         local card = deck.takeObject()
         card.setPosition(zone.getPosition())
         card.setRotation(zone.getRotation())
+        card.addTag(whosObject(zone))
     end
 end
 local function removeUnusedPlayerObjects()
