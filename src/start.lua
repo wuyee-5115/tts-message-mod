@@ -6,7 +6,7 @@ local function getStartButtonParameters()
     return {
         click_function = 'globalStart',
         function_owner = nil,
-        label = "Set up",
+        label = "Start",
         position = {0,0.8,0},
         rotation = {0,180,0},
         width = 500,
@@ -15,7 +15,7 @@ local function getStartButtonParameters()
         fontStyle = "Bold"
     }
 end
-start.setButton = function()
+start.createStartButton = function()
     local startButton = getObjectFromGUID(startButton_guid)
     startButton.createButton(getStartButtonParameters())
 end
