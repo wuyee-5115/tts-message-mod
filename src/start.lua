@@ -15,12 +15,28 @@ local function getStartButtonParameters()
         fontStyle = "Bold"
     }
 end
+local function getHandObjectNumber(player)
+    local handObjects = Player[player].getHandObjects(1)
+    return #handObjects
+end
+local function allHandObjectNumberEqualTo(players, number)
+    for _, player in ipairs(players) do
+        if getHandObjectNumber(player) ~= number then
+            return false
+        end
+    end
+    return true
+end
 start.createStartButton = function()
     local startButton = getObjectFromGUID(startButton_guid)
     startButton.createButton(getStartButtonParameters())
 end
 start.start = function ()
     local seatedPlayers = getSeatedPlayers()
+    if not allHandObjectNumberEqualTo(seatedPlayers, 0) then
+        broadcastToAll("[WARNING]: Place un-used character cards into the 'REMOVE' deck", "Yellow")
+        return
+    end
     local actDeck = getObjectFromGUID(actDeck_guid)
     actDeck.deal(2)
     local initialPlayer = utils.randomItem(seatedPlayers)
