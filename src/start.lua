@@ -64,6 +64,8 @@ start.start = function ()
     actDeck.deal(2)
     local initialPlayer = utils.randomItem(seatedPlayers)
     Turns.turn_color = initialPlayer
+    local startButton = getObjectFromGUID(startButton_guid)
+    startButton.clearButtons()
 end
 function globalStart()
     start.start()
