@@ -15,6 +15,22 @@ local function getStartButtonParameters()
         fontStyle = "Bold"
     }
 end
+local function subsetObjectsWithTag(objects, tag)
+    local objectsWithSameTag = {}
+    for _, object in ipairs(objects) do
+       if utils.contains(object.getTags(), tag) then
+            table.insert(objectsWithSameTag, object)
+       end
+    end
+    return objectsWithSameTag
+end
+local function anyObjects(objects)
+    if #objects > 0 then
+        return true
+    else
+        return false
+    end
+end
 local function getHandObjectNumber(player)
     local handObjects = Player[player].getHandObjects(1)
     return #handObjects
@@ -36,6 +52,13 @@ start.start = function ()
     if not allHandObjectNumberEqualTo(seatedPlayers, 0) then
         broadcastToAll("[WARNING]: Place un-used character cards into the 'REMOVE' deck", "Yellow")
         return
+    end
+    for _, zone in ipairs(getObjectsWithTag("character_zone")) do
+        local cardsInZone = subsetObjectsWithTag(zone.getObjects(), "scripted")
+        if not anyObjects(cardsInZone) then
+            broadcastToAll("[WARNING]: Place a character card you want to use in the character zone on your panel", "Yellow")
+            return
+        end
     end
     local actDeck = getObjectFromGUID(actDeck_guid)
     actDeck.deal(2)
