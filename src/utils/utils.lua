@@ -12,4 +12,7 @@ function utils.length(T)
     end
   return count
 end
+function utils.randomItem(T)
+  return T[math.random(1, #T)]
+end
 return utils

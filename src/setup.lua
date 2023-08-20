@@ -1,8 +1,9 @@
 local setup = {}
 local utils = require("src.utils.utils")
 local log = require("src.utils.log")
+local start = require("src.start")
 local idDeck_guid = "937c8b"
-local charDeck_guid = "e0c75d"
+local charDeck_guid = "30c66e"
 local setupButton_guid = "2816c9"
 local function getSetUpButtonParameters()
     return {
@@ -78,6 +79,7 @@ function setup.setUp()
     transferObjectsWithSameTag(idDeck, charDeck, playerTag)
     distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
     charDeck.putObject(idDeck)
+    start.createStartButton()
 end
 function globalSetUp()
     setup.setUp()
