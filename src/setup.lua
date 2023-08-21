@@ -65,7 +65,7 @@ local function dealCards(deck, num)
     deck.shuffle()
     deck.deal(num)
 end
-function setup.setUp()
+setup.setUp = function()
     local numPlayers = utils.length(getSeatedPlayers())
     if numPlayers < 3 or numPlayers > 7 then
        broadcastToAll("[WARNING]: This game only supports 3 - 7 players", "Yellow") 
