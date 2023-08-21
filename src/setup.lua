@@ -53,9 +53,9 @@ end
 local function removeUnusedPlayerObjects()
     -- this function assumes that target objects have corresponding tags (i.e. color name) to their owner
     local player_colors = {"White", "Red", "Yellow", "Green", "Blue", "Purple", "Pink"}
-    for i, color in ipairs(player_colors) do
+    for _, color in ipairs(player_colors) do
         if not utils.contains(getSeatedPlayers(), color) then
-            for i, object in ipairs(getObjectsWithTag(color)) do
+            for _, object in ipairs(getObjectsWithTag(color)) do
                 destroyObject(object)
             end
         end 
