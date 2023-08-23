@@ -25,7 +25,7 @@ function setup.onLoad()
     setupButton = getObjectFromGUID(setupButton_guid)
     setupButton.createButton(getSetUpButtonParameters())
 end
-local function moveObjectsWithTag(source, target, tag)
+local function moveObjectsWithoutTag(source, target, tag)
     for _, object in ipairs(source.getObjects()) do
         if not utils.contains(object.tags, tag) then
             local takenObject = source.takeObject({guid = object.guid, smooth = true})
@@ -76,7 +76,7 @@ setup.setUp = function()
     dealCards(charDeck, 3)
     setupButton.clearButtons()
     local playerTag = "player_" .. tostring(numPlayers)
-    moveObjectsWithTag(idDeck, charDeck, playerTag)
+    moveObjectsWithoutTag(idDeck, charDeck, playerTag)
     distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
     charDeck.putObject(idDeck)
     start.createStartButton()
