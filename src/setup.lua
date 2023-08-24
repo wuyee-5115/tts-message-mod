@@ -2,10 +2,8 @@ local setup = {}
 local utils = require("src.utils.utils")
 local log = require("src.utils.log")
 local start = require("src.start")
-local idDeck_guid = "937c8b"
-local charDeck_guid = "30c66e"
-local setupButton_guid = "2816c9"
-local idDeck_zone_guid = "9a0b41"
+local objects = require("src.consts.objects")
+local colors = require("src.consts.colors")
 local function getSetUpButtonParameters()
     return {
         click_function = 'globalSetUp',
@@ -21,11 +19,7 @@ local function getSetUpButtonParameters()
 end
 function setup.onLoad()
     log.dev('setup.onLoad')
-    idDeck = getObjectFromGUID(idDeck_guid)
-    idDeck_zone = getObjectFromGUID(idDeck_zone_guid)
-    charDeck = getObjectFromGUID(charDeck_guid)
-    setupButton = getObjectFromGUID(setupButton_guid)
-    setupButton.createButton(getSetUpButtonParameters())
+    objects.setupButton.createButton(getSetUpButtonParameters())
 end
 local function moveObjectsWithoutTag(source, target, tag)
     for _, object in ipairs(source.getObjects()) do
@@ -54,7 +48,7 @@ local function distributeCardsToEachZone(deck, zones)
 end
 local function removeUnusedPlayerObjects()
     -- this function assumes that target objects have corresponding tags (i.e. color name) to their owner
-    local player_colors = {"White", "Red", "Yellow", "Green", "Blue", "Purple", "Pink"}
+    local player_colors = {colors.white, colors.red, colors.yellow, colors.green, colors.blue, colors.purple, colors.pink}
     for _, color in ipairs(player_colors) do
         if not utils.contains(getSeatedPlayers(), color) then
             for _, object in ipairs(getObjectsWithTag(color)) do
@@ -75,17 +69,17 @@ setup.setUp = function()
     end
     removeUnusedPlayerObjects()
     broadcastToAll("[INFO]: Select a character card and put it into your panel")
-    dealCards(charDeck, 3)
-    setupButton.clearButtons()
+    dealCards(objects.charDeck, 3)
+    objects.setupButton.clearButtons()
     local playerTag = "player_" .. tostring(numPlayers)
-    moveObjectsWithoutTag(idDeck, charDeck, playerTag)
-    distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
+    moveObjectsWithoutTag(objects.idDeck, objects.charDeck, playerTag)
+    distributeCardsToEachZone(objects.idDeck, getObjectsWithTag("identity_zone"))
     -- TODO: Currently waiting for other cards to clear to avoid deck misidentification.
     -- Needs a more robust solution to eliminate dependency on wait time.
     Wait.time(
         function ()
-            for _, object in ipairs(idDeck_zone.getObjects()) do
-                charDeck.putObject(object)
+            for _, object in ipairs(objects.idDeck_zone.getObjects()) do
+                objects.charDeck.putObject(object)
             end
         end,
         0.05
