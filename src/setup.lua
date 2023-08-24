@@ -5,6 +5,7 @@ local start = require("src.start")
 local idDeck_guid = "937c8b"
 local charDeck_guid = "30c66e"
 local setupButton_guid = "2816c9"
+local idDeck_zone_guid = "9a0b41"
 local function getSetUpButtonParameters()
     return {
         click_function = 'globalSetUp',
@@ -21,6 +22,7 @@ end
 function setup.onLoad()
     log.dev('setup.onLoad')
     idDeck = getObjectFromGUID(idDeck_guid)
+    idDeck_zone = getObjectFromGUID(idDeck_zone_guid)
     charDeck = getObjectFromGUID(charDeck_guid)
     setupButton = getObjectFromGUID(setupButton_guid)
     setupButton.createButton(getSetUpButtonParameters())
@@ -78,7 +80,16 @@ setup.setUp = function()
     local playerTag = "player_" .. tostring(numPlayers)
     moveObjectsWithoutTag(idDeck, charDeck, playerTag)
     distributeCardsToEachZone(idDeck, getObjectsWithTag("identity_zone"))
-    charDeck.putObject(idDeck)
+    -- TODO: Currently waiting for other cards to clear to avoid deck misidentification.
+    -- Needs a more robust solution to eliminate dependency on wait time.
+    Wait.time(
+        function ()
+            for _, object in ipairs(idDeck_zone.getObjects()) do
+                charDeck.putObject(object)
+            end
+        end,
+        0.05
+    )
     start.createStartButton()
 end
 function globalSetUp()
