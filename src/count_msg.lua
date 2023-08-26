@@ -21,4 +21,36 @@ local msg = {
 ["203fdc"] = "blue",
 ["fb9608"] = "dual", ["7345ee"] = "dual",  ["516bf5"] = "dual"
 }
+local function subsetByKeys(mainTable, keysToSelect) 
+	local subset = {}
+	for _, key in ipairs(keysToSelect) do
+		subset[key] = mainTable[key]
+	end
+	return subset
+end
+local function countValueFreq(valueTable)
+	local valueFreq = {}
+	for key, value in pairs(valueTable) do
+		valueFreq[value] = (valueFreq[value] or 0) + 1
+	end
+	return valueFreq
+end
+countMsg.getCardGUIDsfromZone = function(targetZone)
+	local guids = {}
+    for _, object in ipairs(targetZone.getObjects()) do
+        if object.getData().Name == "Card" then
+            table.insert(guids, object.getGUID())
+        elseif object.getData().Name == "Deck" then
+            for _, cardInDeck in ipairs(object.getObjects()) do
+                table.insert(guids, cardInDeck.guid)
+            end
+        end
+    end
+	return guids
+end
+countMsg.countMsg = function(msgGUIDs)
+	local selectedMsg = subsetByKeys(msg, msgGUIDs)
+	local selectedMsgFreq = countValueFreq(selectedMsg)
+	return selectedMsgFreq
+end
 return countMsg
