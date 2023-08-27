@@ -19,7 +19,7 @@ local function getSetUpButtonParameters()
 end
 function setup.onLoad()
     log.dev('setup.onLoad')
-    objects.setupButton.createButton(getSetUpButtonParameters())
+    objects.setupButtonScriptZone().createButton(getSetUpButtonParameters())
 end
 local function moveObjectsWithoutTag(source, target, tag)
     for _, object in ipairs(source.getObjects()) do
@@ -69,17 +69,17 @@ setup.setUp = function()
     end
     removeUnusedPlayerObjects()
     broadcastToAll("[INFO]: Select a character card and put it into your panel")
-    dealCards(objects.charDeck, 3)
-    objects.setupButton.clearButtons()
+    dealCards(objects.charDeck(), 3)
+    objects.setupButtonScriptZone().clearButtons()
     local playerTag = "player_" .. tostring(numPlayers)
-    moveObjectsWithoutTag(objects.idDeck, objects.charDeck, playerTag)
-    distributeCardsToEachZone(objects.idDeck, getObjectsWithTag("identity_zone"))
+    moveObjectsWithoutTag(objects.idDeck(), objects.charDeck(), playerTag)
+    distributeCardsToEachZone(objects.idDeck(), getObjectsWithTag("identity_zone"))
     -- TODO: Currently waiting for other cards to clear to avoid deck misidentification.
     -- Needs a more robust solution to eliminate dependency on wait time.
     Wait.time(
         function ()
-            for _, object in ipairs(objects.idDeck_zone.getObjects()) do
-                objects.charDeck.putObject(object)
+            for _, object in ipairs(objects.idDeck_zone().getObjects()) do
+                objects.charDeck().putObject(object)
             end
         end,
         0.05
