@@ -1,8 +1,8 @@
 local start = {}
 local utils = require("src.utils.utils")
-local actDeck_guid = "4a8259"
-local startButton_guid = "2816c9"
-local warning_color = "Yellow"
+local colors = require("src.consts.colors")
+local objects = require("src.consts.objects")
+local warning_color = colors.yellow
 local function extractObjectsWithTag(objects, tag)
     local objectsWithSameTag = {}
     for _, object in ipairs(objects) do
@@ -27,7 +27,7 @@ local function areAllHandObjectsEqualToNumber(players, number)
     return true
 end
 start.createStartButton = function()
-    getObjectFromGUID(startButton_guid).createButton({
+    objects.setupButtonScriptZone().createButton({
         click_function = 'globalStart',
         label = "Start",
         position = {0,0.8,0},
@@ -49,9 +49,9 @@ start.start = function ()
             return
         end
     end
-    getObjectFromGUID(actDeck_guid).deal(2)
+    objects.actDeck().deal(2)
     Turns.turn_color = utils.randomItem(seatedPlayers)
-    getObjectFromGUID(startButton_guid).clearButtons()
+    objects.setupButtonScriptZone().clearButtons()
 end
 function globalStart()
     start.start()

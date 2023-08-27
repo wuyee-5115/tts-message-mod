@@ -1,10 +1,13 @@
 local objects = {}
-local log = require("src.utils.log")
-function objects.onLoad()
-    log.dev('objects.onLoad')
-    objects.idDeck = getObjectFromGUID("937c8b")
-    objects.charDeck = getObjectFromGUID("30c66e")
-    objects.setupButton = getObjectFromGUID("2816c9")
-    objects.idDeck_zone = getObjectFromGUID("9a0b41")
+local guids = require("src.consts.guids")
+local function getObjFun(guid)
+    return function() return getObjectFromGUID(guid) end
 end
+-- Get the object by calling a function, like: objects.idDeck()
+-- Add objects by GUID using getObjFun as follows
+objects.idDeck = getObjFun(guids.idDeck)
+objects.charDeck = getObjFun(guids.charDeck)
+objects.setupButtonScriptZone = getObjFun(guids.setupButtonScriptZone)
+objects.idDeck_zone = getObjFun(guids.idDeck_zone)
+objects.actDeck = getObjFun(guids.actDeck)
 return objects
