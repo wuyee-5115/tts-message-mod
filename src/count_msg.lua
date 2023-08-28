@@ -1,26 +1,100 @@
 local countMsg = {}
-local msg = {
-["c5bd16"] = "black", ["9aa160"] = "black", ["acf26c"] = "black", ["cb92ea"] = "black", ["ca44ae"] = "black",
-["f3a288"] = "black", ["964486"] = "black", ["004270"] = "black", ["d327cf"] = "black", ["b0a54c"] = "black",
-["705167"] = "black", ["afa320"] = "black", ["29e183"] = "black", ["eee983"] = "black", ["ee8727"] = "black",
-["1e0537"] = "black", ["88fb48"] = "black", ["8738a1"] = "black", ["1324c7"] = "black", ["42fdb3"] = "black",
-["2f9243"] = "black", ["7fff50"] = "black", ["1df492"] = "black", ["8200ce"] = "black", ["11f7cc"] = "black",
-["0a5713"] = "black", ["52d575"] = "black", ["2d5396"] = "black", ["54b223"] = "black", ["6161eb"] = "black",
-["51e2c5"] = "black", ["35a9c6"] = "black", ["b2717c"] = "black", ["8918bd"] = "black", ["1f6d6b"] = "black",
-["1faa74"] = "black", ["64803c"] = "black", ["d4ebfc"] = "black", ["7f4d5f"] = "black", ["d883c6"] = "black",
-["18ca1c"] = "black", ["5650fc"] = "black",
-["d96c0d"] = "red", ["b2fe77"] = "red", ["d82ddc"] = "red", ["93096a"] = "red", ["672e50"] = "red", 
-["1fdd73"] = "red", ["2fa342"] = "red", ["bcede5"] = "red", ["bb0cdb"] = "red", ["6f2467"] = "red", 
-["b690e4"] = "red", ["3b33df"] = "red", ["d1f8bd"] = "red", ["24c7c1"] = "red", ["bdcaf5"] = "red", 
-["d690f3"] = "red", ["02909f"] = "red", ["873733"] = "red", ["91612f"] = "red", ["5cf9bc"] = "red", 
-["cc5d8c"] = "red",
-["74bd8c"] = "blue", ["b18cd7"] = "blue", ["71fc0b"] = "blue", ["b76da5"] = "blue", ["a6982b"] = "blue", 
-["73506c"] = "blue", ["5de7c2"] = "blue", ["30014c"] = "blue", ["f247c1"] = "blue", ["959f5a"] = "blue", 
-["5ab142"] = "blue", ["1d62df"] = "blue", ["55ac2b"] = "blue", ["70abb1"] = "blue", ["341b07"] = "blue", 
-["4114b8"] = "blue", ["4beb3f"] = "blue", ["3d7eed"] = "blue", ["c92a44"] = "blue", ["0a1931"] = "blue", 
-["203fdc"] = "blue",
-["fb9608"] = "dual", ["7345ee"] = "dual",  ["516bf5"] = "dual"
+local actCardMeta = {
+["c5bd16"] = { message = "black" },
+["9aa160"] = { message = "black" },
+["acf26c"] = { message = "black" },
+["cb92ea"] = { message = "black" },
+["ca44ae"] = { message = "black" },
+["f3a288"] = { message = "black" },
+["964486"] = { message = "black" },
+["004270"] = { message = "black" },
+["d327cf"] = { message = "black" },
+["b0a54c"] = { message = "black" },
+["705167"] = { message = "black" },
+["afa320"] = { message = "black" },
+["29e183"] = { message = "black" },
+["eee983"] = { message = "black" },
+["ee8727"] = { message = "black" },
+["1e0537"] = { message = "black" },
+["88fb48"] = { message = "black" },
+["8738a1"] = { message = "black" },
+["1324c7"] = { message = "black" },
+["42fdb3"] = { message = "black" },
+["2f9243"] = { message = "black" },
+["7fff50"] = { message = "black" },
+["1df492"] = { message = "black" },
+["8200ce"] = { message = "black" },
+["11f7cc"] = { message = "black" },
+["0a5713"] = { message = "black" },
+["52d575"] = { message = "black" },
+["2d5396"] = { message = "black" },
+["54b223"] = { message = "black" },
+["6161eb"] = { message = "black" },
+["51e2c5"] = { message = "black" },
+["35a9c6"] = { message = "black" },
+["b2717c"] = { message = "black" },
+["8918bd"] = { message = "black" },
+["1f6d6b"] = { message = "black" },
+["1faa74"] = { message = "black" },
+["64803c"] = { message = "black" },
+["d4ebfc"] = { message = "black" },
+["7f4d5f"] = { message = "black" },
+["d883c6"] = { message = "black" },
+["18ca1c"] = { message = "black" },
+["5650fc"] = { message = "black" },
+["d96c0d"] = { message = "red" },
+["b2fe77"] = { message = "red" },
+["d82ddc"] = { message = "red" },
+["93096a"] = { message = "red" },
+["672e50"] = { message = "red" },
+["1fdd73"] = { message = "red" },
+["2fa342"] = { message = "red" },
+["bcede5"] = { message = "red" },
+["bb0cdb"] = { message = "red" },
+["6f2467"] = { message = "red" },
+["b690e4"] = { message = "red" },
+["3b33df"] = { message = "red" },
+["d1f8bd"] = { message = "red" },
+["24c7c1"] = { message = "red" },
+["bdcaf5"] = { message = "red" },
+["d690f3"] = { message = "red" },
+["02909f"] = { message = "red" },
+["873733"] = { message = "red" },
+["91612f"] = { message = "red" },
+["5cf9bc"] = { message = "red" },
+["cc5d8c"] = { message = "red" },
+["74bd8c"] = { message = "blue" },
+["b18cd7"] = { message = "blue" },
+["71fc0b"] = { message = "blue" },
+["b76da5"] = { message = "blue" },
+["a6982b"] = { message = "blue" },
+["73506c"] = { message = "blue" },
+["5de7c2"] = { message = "blue" },
+["30014c"] = { message = "blue" },
+["f247c1"] = { message = "blue" },
+["959f5a"] = { message = "blue" },
+["5ab142"] = { message = "blue" },
+["1d62df"] = { message = "blue" },
+["55ac2b"] = { message = "blue" },
+["70abb1"] = { message = "blue" },
+["341b07"] = { message = "blue" },
+["4114b8"] = { message = "blue" },
+["4beb3f"] = { message = "blue" },
+["3d7eed"] = { message = "blue" },
+["c92a44"] = { message = "blue" },
+["0a1931"] = { message = "blue" },
+["203fdc"] = { message = "blue" },
+["fb9608"] = { message = "dual" },
+["7345ee"] = { message = "dual" },
+["516bf5"] = { message = "dual" }
 }
+local function getInfoByAttribute(metadata, attribute)
+	local infoTable = {}
+	for key, value in pairs(metadata) do
+		infoTable[key] = metadata[key][attribute]
+	end
+	return infoTable
+end
 local function subsetByKeys(mainTable, keysToSelect) 
 	local subset = {}
 	for _, key in ipairs(keysToSelect) do
@@ -48,9 +122,10 @@ countMsg.getCardGUIDsfromZone = function(targetZone)
     end
 	return guids
 end
-countMsg.countMsg = function(msgGUIDs)
-	local selectedMsg = subsetByKeys(msg, msgGUIDs)
-	local selectedMsgFreq = countValueFreq(selectedMsg)
-	return selectedMsgFreq
+countMsg.countMsg = function(guids)
+	local subsetActCardMeta = subsetByKeys(actCardMeta, guids)
+	local messageInfo = getInfoByAttribute(subsetActCardMeta, "message")
+	local messageFreq = countValueFreq(messageInfo)
+	return messageFreq
 end
 return countMsg
