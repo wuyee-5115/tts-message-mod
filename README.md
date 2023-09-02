@@ -21,3 +21,8 @@ This project aims to develop a mod for the boardgame "Message (風聲)".
 5. Verify Game Start Logic (Start Button)
     1. After setting up, place character cards in the character zone and discard un-used hand cards.
     2. Press Start Button; verify action cards deal and turn setup.
+6. Verify Message Counters
+	1. Confirm initial counters display correctly for all seated players.
+	2. Move varying message cards into/out of a message zone and verify correct counter updates.
+	3. Move non-message cards into/out of a message zone and ensure counters remain unchanged.
+	4. Move varying message cards into/out of a non-message zone and ensure counters remain unchanged.
