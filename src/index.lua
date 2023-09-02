@@ -17,15 +17,25 @@ local create = require("src.create")
 local seatedPlayerObjectParams = utils.subsetByKeys(params, getSeatedPlayers())
 local guidToAttributes = create.objectsFromParams(seatedPlayerObjectParams)
 local attributesToGuid = create.attributesToGuid(guidToAttributes)
-function onObjectEnterZone(zone, object)
-	if guidToAttributes[zone.getGUID()] and guidToAttributes[zone.getGUID()]["objectType"] == "msgDeck" then
+-- Event handlers
+local zoneHandlers = {
+	["msgDeck"] = function(zone)
 		msgCounter.updateMsgFreqDisplay(zone, metadata.actCard, attributesToGuid, guidToAttributes)
+	end,
+	-- Add more zone types here
+}
+local function handleZoneAction(zone, object)
+	local zoneType = guidToAttributes[zone.getGUID()] and guidToAttributes[zone.getGUID()]["objectType"]
+	if zoneType and zoneHandlers[zoneType] then
+		zoneHandlers[zoneType](zone)
 	end
 end
+-- Events
+function onObjectEnterZone(zone, object)
+	handleZoneAction(zone, object)
+end
 function onObjectLeaveZone(zone, object)
-	if guidToAttributes[zone.getGUID()] and guidToAttributes[zone.getGUID()]["objectType"] == "msgDeck" then
-		msgCounter.updateMsgFreqDisplay(zone, metadata.actCard, attributesToGuid, guidToAttributes)
-	end
+	handleZoneAction(zone, object)
 end
 -- project onLoad
 function onLoad()
