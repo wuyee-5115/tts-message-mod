@@ -1,15 +1,15 @@
 local msgCounter = {}
 local utils = require("src.utils.utils")
 -- Get specific attribute values from a metadata table
--- @param metadata: table containing metadata for game objects
--- @param attribute: string representing the attribute to retrieve
--- @return infoTable: table mapping keys to the attribute value
-local function getInfoByAttribute(metadata, attribute)
-	local infoTable = {}
-	for key, value in pairs(metadata) do
-		infoTable[key] = metadata[key][attribute]
+-- @param nested_tbl: table containing nested tables
+-- @param child_key: key of a table within another table
+-- @return extract_tbl: table mapping nested_tbl's keys to the attribute value
+local function getValuesFromNestedTableByChildKey(nested_tbl, child_key)
+	local extract_tbl = {}
+	for parent_key, tbl in pairs(nested_tbl) do
+		extract_tbl[parent_key] = nested_tbl[parent_key][child_key]
 	end
-	return infoTable
+	return extract_tbl
 end
 -- Count the frequency of each value in a table
 -- @param valueTable: table containing values to be counted
@@ -43,7 +43,7 @@ end
 -- @return messageFreq: table mapping each message type to its frequency
 local function countMessage(actCardMeta, guids)
 	local subsetActCardMeta = utils.subsetByKeys(actCardMeta, guids)
-	local messageInfo = getInfoByAttribute(subsetActCardMeta, "message")
+	local messageInfo = getValuesFromNestedTableByChildKey(subsetActCardMeta, "message")
 	local messageFreq = countValueFreq(messageInfo)
 	return messageFreq
 end
