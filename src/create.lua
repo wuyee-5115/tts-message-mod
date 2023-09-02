@@ -8,7 +8,7 @@ create.objectsFromParams = function(params)
 	for player, objectTypes in pairs(params) do
 		for objectType, objectParams in pairs(objectTypes) do
 			local object = spawnObject(objectParams)
-			guidToAttributes[object.getGUID()] = utils.append(objectParams, {["player"] = player, ["objectType"] = objectType})
+			guidToAttributes[object.getGUID()] = utils.append({["player"] = player, ["objectType"] = objectType}, objectParams)
 		end
 	end
 	return guidToAttributes
