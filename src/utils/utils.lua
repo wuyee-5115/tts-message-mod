@@ -23,7 +23,7 @@ utils.append = function(from_tbl, to_tbl)
 	end
 	return to_tbl
 end
-utils.subsetByKeys = function(tbl, keys) 
+utils.subsetByKeys = function(tbl, keys)
 	local subset = {}
 	for _, key in ipairs(keys) do
 		subset[key] = tbl[key]
