@@ -26,7 +26,7 @@ params[colors.white] = {
 		type = "ScriptingTrigger",
 		position = {1.31, 3.84, -14.33},
 		scale = {1, 5.1, 1}
-	}
+	},
 }
 params[colors.red] = {
 	blackMsgNumDisplay = {
@@ -54,7 +54,7 @@ params[colors.red] = {
 		type = "ScriptingTrigger",
 		position = {-13.71, 3.84, -14.33},
 		scale = {1, 5.1, 1}
-	}
+	},
 }
 params[colors.pink] = {
 	blackMsgNumDisplay = {
@@ -82,7 +82,7 @@ params[colors.pink] = {
 		type = "ScriptingTrigger",
 		position = {16.35, 3.84, -14.33},
 		scale = {1, 5.1, 1}
-	}
+	},
 }
 params[colors.yellow] = {
 	blackMsgNumDisplay = {
@@ -110,7 +110,7 @@ params[colors.yellow] = {
 		type = "ScriptingTrigger",
 		position = {-19.36, 3.84, -0.95},
 		scale = {1, 5.1, 1}
-	}
+	},
 }
 params[colors.green] = {
 	blackMsgNumDisplay = {
@@ -138,7 +138,7 @@ params[colors.green] = {
 		type = "ScriptingTrigger",
 		position = {-16.18, 3.84, 15.34},
 		scale = {1, 5.1, 1}
-	}
+	},
 }
 params[colors.blue] = {
 	blackMsgNumDisplay = {
@@ -166,7 +166,7 @@ params[colors.blue] = {
 		type = "ScriptingTrigger",
 		position = {13.71, 3.84, 15.34},
 		scale = {1, 5.1, 1}
-	}
+	},
 }
 params[colors.purple] = {
 	blackMsgNumDisplay = {
@@ -194,6 +194,6 @@ params[colors.purple] = {
 		type = "ScriptingTrigger",
 		position = {19.47, 3.84, 1.81},
 		scale = {1, 5.1, 1}
-	}
+	},
 }
 return params
