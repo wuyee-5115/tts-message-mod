@@ -4,6 +4,7 @@ local log = require("src.utils.log")
 local start = require("src.start")
 local objects = require("src.consts.objects")
 local colors = require("src.consts.colors")
+local paramsPlayerPanel = require("src.consts.paramsPlayerPanel")
 local function getSetUpButtonParameters()
     return {
         click_function = 'globalSetUp',
@@ -54,7 +55,12 @@ local function removeUnusedPlayerObjects()
             for _, object in ipairs(getObjectsWithTag(color)) do
                 destroyObject(object)
             end
-        end 
+        end
+    end
+end
+local function spawnPlayerPanels()
+    for _, player in ipairs(getSeatedPlayers()) do
+        spawnObjectJSON(paramsPlayerPanel[player].playerPanel)
     end
 end
 local function dealCards(deck, num)
@@ -68,6 +74,7 @@ setup.setUp = function()
        return
     end
     removeUnusedPlayerObjects()
+    spawnPlayerPanels()
     broadcastToAll("[INFO]: Select a character card and put it into your panel")
     dealCards(objects.charDeck(), 3)
     objects.setupButtonScriptZone().clearButtons()
