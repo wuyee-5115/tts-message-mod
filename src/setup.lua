@@ -4,6 +4,7 @@ local log = require("src.utils.log")
 local start = require("src.start")
 local objects = require("src.consts.objects")
 local colors = require("src.consts.colors")
+local params = require("src.consts.params")
 local paramsPlayerPanel = require("src.consts.paramsPlayerPanel")
 local function getSetUpButtonParameters()
     return {
@@ -67,6 +68,13 @@ local function dealCards(deck, num)
     deck.shuffle()
     deck.deal(num)
 end
+local function createObjectsFromParams(params)
+	for player, objectTypes in pairs(params) do
+		for objectType, objectParams in pairs(objectTypes) do
+			local object = spawnObjectData(objectParams)
+		end
+	end
+end
 setup.setUp = function()
     local numPlayers = utils.length(getSeatedPlayers())
     if numPlayers < 3 or numPlayers > 7 then
@@ -75,6 +83,8 @@ setup.setUp = function()
     end
     removeUnusedPlayerObjects()
     spawnPlayerPanels()
+	local seatedPlayerObjctParams = utils.subsetByKeys(params, getSeatedPlayers())
+	createObjectsFromParams(seatedPlayerObjctParams)
     broadcastToAll("[INFO]: Select a character card and put it into your panel")
     dealCards(objects.charDeck(), 3)
     objects.setupButtonScriptZone().clearButtons()

@@ -12,20 +12,15 @@ local start = require("src.start")
 local params = require("src.consts.params")
 local metadata = require("src.consts.metadata")
 local msgCounter = require("src.msgCounter")
-local create = require("src.create")
--- Spawn objects
-local seatedPlayerObjectParams = utils.subsetByKeys(params, getSeatedPlayers())
-local guidToAttributes = create.objectsFromParams(seatedPlayerObjectParams)
-local attributesToGuid = create.attributesToGuid(guidToAttributes)
 -- Event handlers
 local zoneHandlers = {
 	["msgDeck"] = function(zone)
-		msgCounter.updateMsgFreqDisplay(zone, metadata.actCard, attributesToGuid, guidToAttributes)
+		msgCounter.updateMsgFreqDisplay(zone, metadata.actCard, metadata.playerObjects, params)
 	end,
 	-- Add more zone types here
 }
 local function handleZoneAction(zone, object)
-	local zoneType = guidToAttributes[zone.getGUID()] and guidToAttributes[zone.getGUID()]["objectType"]
+	local zoneType = metadata.playerObjects[zone.getGUID()] and metadata.playerObjects[zone.getGUID()]["objectType"]
 	if zoneType and zoneHandlers[zoneType] then
 		zoneHandlers[zoneType](zone)
 	end
