@@ -1,4 +1,161 @@
 local metadata = {}
+local colors = require("src.consts.colors")
+metadata.playerObjects = {
+	["4582e2"] = {
+		player = colors.white,
+		objectType = "blackMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["b1c39a"] = {
+		player = colors.white,
+		objectType = "blueMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["f80f23"] = {
+		player = colors.white,
+		objectType = "redMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["b1ec8b"] = {
+		player = colors.white,
+		objectType = "msgDeck",
+	},
+	["73e3ab"] = {
+		player = colors.red,
+		objectType = "blackMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["79f044"] = {
+		player = colors.red,
+		objectType = "blueMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["10078e"] = {
+		player = colors.red,
+		objectType = "redMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["b5a61b"] = {
+		player = colors.red,
+		objectType = "msgDeck",
+	},
+	["8f11bd"] = {
+		player = colors.pink,
+		objectType = "blackMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["3a4554"] = {
+		player = colors.pink,
+		objectType = "blueMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["bed812"] = {
+		player = colors.pink,
+		objectType = "redMsgNumDisplay",
+		rotation = {90, 0, 0},
+		scale = {1, 1, 1},
+	},
+	["755d6a"] = {
+		player = colors.pink,
+		objectType = "msgDeck"
+	},
+	["d89d76"] = {
+		player = colors.yellow,
+		objectType = "blackMsgNumDisplay",
+		rotation = {90, 0, -90},
+		scale = {1, 1, 1},
+	},
+	["d03d9d"] = {
+		player = colors.yellow,
+		objectType = "blueMsgNumDisplay",
+		rotation = {90, 0, -90},
+		scale = {1, 1, 1},
+	},
+	["0ebed7"] = {
+		player = colors.yellow,
+		objectType = "redMsgNumDisplay",
+		rotation = {90, 0, -90},
+		scale = {1, 1, 1},
+	},
+	["971c8c"] = {
+		player = colors.yellow,
+		objectType = "msgDeck"
+	},
+	["84785f"] = {
+		player = colors.green,
+		objectType = "blackMsgNumDisplay",
+		rotation = {90, 0, 180},
+		scale = {1, 1, 1},
+	},
+	["1ab8c7"] = {
+		player = colors.green,
+		objectType = "blueMsgNumDisplay",
+		rotation = {90, 0, 180},
+		scale = {1, 1, 1},
+	},
+	["4777ab"] = {
+		player = colors.green,
+		objectType = "redMsgNumDisplay",
+		rotation = {90, 0, 180},
+		scale = {1, 1, 1},
+	},
+	["e1f45d"] = {
+		player = colors.green,
+		objectType = "msgDeck"
+	},
+	["d4607a"] = {
+		player = colors.blue,
+		objectType = "blackMsgNumDisplay",
+		rotation = {90, 0, 180},
+		scale = {1, 1, 1},
+	},
+	["56c631"] = {
+		player = colors.blue,
+		objectType = "blueMsgNumDisplay",
+		rotation = {90, 0, 180},
+		scale = {1, 1, 1},
+	},
+	["42e7ca"] = {
+		player = colors.blue,
+		objectType = "redMsgNumDisplay",
+		rotation = {90, 0, 180},
+		scale = {1, 1, 1},
+	},
+	["7d91a9"] = {
+		player = colors.blue,
+		objectType = "msgDeck"
+	},
+	["8d38c1"] = {
+		player = colors.purple,
+		objectType = "blackMsgNumDisplay",
+		rotation = {90, 0, 90},
+		scale = {1, 1, 1},
+	},
+	["ff5d56"] = {
+		player = colors.purple,
+		objectType = "blueMsgNumDisplay",
+		rotation = {90, 0, 90},
+		scale = {1, 1, 1},
+	},
+	["11c7ce"] = {
+		player = colors.purple,
+		objectType = "redMsgNumDisplay",
+		rotation = {90, 0, 90},
+		scale = {1, 1, 1},
+	},
+	["cd42b3"] = {
+		player = colors.purple,
+		objectType = "msgDeck"
+	},
+}
 metadata.actCard = {
 ["c5bd16"] = { message = "black" },
 ["9aa160"] = { message = "black" },

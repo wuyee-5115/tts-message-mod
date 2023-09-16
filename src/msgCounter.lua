@@ -49,14 +49,14 @@ local function countMessage(actCardMeta, guids)
 end
 -- Update the message frequency display for a zone
 -- @param zone: Zone object to update the display for
--- @param metadata: table containing metadata for game objects
--- @param attributesToGuid: table mapping attributes to object GUIDs
--- @param guidToAttributes: table mapping object GUIDs to their attributes
-msgCounter.updateMsgFreqDisplay = function(zone, metadata, attributesToGuid, guidToAttributes)
-	local msgFreq = countMessage(metadata, getCardGUIDsfromZone(zone))
-	local player = guidToAttributes[zone.getGUID()]["player"]
-	getObjectFromGUID(attributesToGuid[player]["blackMsgNumDisplay"]).setValue(tostring(msgFreq.black or 0))
-	getObjectFromGUID(attributesToGuid[player]["blueMsgNumDisplay"]).setValue(tostring((msgFreq.blue or 0) + (msgFreq.dual or 0)))
-	getObjectFromGUID(attributesToGuid[player]["redMsgNumDisplay"]).setValue(tostring((msgFreq.red or 0) + (msgFreq.dual or 0)))
+-- @param actCardMeta: table containing metadata for, mapping guid to attrbutes such as message types
+-- @param playerObjectMeta: table containing metadata for player object, mapping guid to attributes such as player colors
+-- @param params: table mapping object attributes to their guids, such as guids and position
+msgCounter.updateMsgFreqDisplay = function(zone, actCardMeta, playerObjectMeta, params)
+	local msgFreq = countMessage(actCardMeta, getCardGUIDsfromZone(zone))
+	local player = playerObjectMeta[zone.getGUID()]["player"]
+	getObjectFromGUID(params[player]["blackMsgNumDisplay"].data.GUID).setValue(tostring(msgFreq.black or 0))
+	getObjectFromGUID(params[player]["blueMsgNumDisplay"].data.GUID).setValue(tostring((msgFreq.blue or 0) + (msgFreq.dual or 0)))
+	getObjectFromGUID(params[player]["redMsgNumDisplay"].data.GUID).setValue(tostring((msgFreq.red or 0) + (msgFreq.dual or 0)))
 end
 return msgCounter
