@@ -6,9 +6,10 @@ This project aims to develop a mod for the boardgame "Message (風聲)".
 
 1. Verify Removal of Unused Player Panels (Setup Button)
     1. Set up the game with various numbers of players.
-    2. Press Setup Button; ensure unused Player Panels are removed.
-    3. Ensure all players receive 3 character cards in hand zone and 1 identity card in the panel.
-    4. Ensure correct identity card types.
+    2. Press Setup Button; ensure unused zones are remove
+    3. Ensure player panels and messgs display regions correctly generates
+    4. Ensure all players receive 3 character cards in hand zone and 1 identity card in the panel.
+    5. Ensure correct identity card types.
 2. Verify Warning for Unsupported Number of Players (Setup Button)
     1. Set players outside 3-7 range.
     2. Press Setup Button; check for warning message.
