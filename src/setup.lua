@@ -68,6 +68,8 @@ local function dealCards(deck, num)
     deck.shuffle()
     deck.deal(num)
 end
+-- create objects from custom `params` tables
+-- @param params: table mapping object attributes to their guids, such as guids and position
 local function createObjectsFromParams(params)
 	for player, objectTypes in pairs(params) do
 		for objectType, objectParams in pairs(objectTypes) do

@@ -49,8 +49,9 @@ local function countMessage(actCardMeta, guids)
 end
 -- Update the message frequency display for a zone
 -- @param zone: Zone object to update the display for
--- @param metadata: table containing metadata for game objects
--- @param params: table mapping object attributes to their guids
+-- @param actCardMeta: table containing metadata for, mapping guid to attrbutes such as message types
+-- @param playerObjectMeta: table containing metadata for player object, mapping guid to attributes such as player colors
+-- @param params: table mapping object attributes to their guids, such as guids and position
 msgCounter.updateMsgFreqDisplay = function(zone, actCardMeta, playerObjectMeta, params)
 	local msgFreq = countMessage(actCardMeta, getCardGUIDsfromZone(zone))
 	local player = playerObjectMeta[zone.getGUID()]["player"]
